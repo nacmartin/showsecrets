@@ -1,0 +1,14 @@
+# File: .github/workflows/hello-world.yml
+name: Hello World
+
+on:
+  push:
+    branches: [ main ]        # run automatically on every push to main
+  workflow_dispatch:          # adds a “Run workflow” button in the Actions tab
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest    # GitHub-hosted Linux runner
+    steps:
+      - name: Echo greeting
+        run: echo "hello world"
