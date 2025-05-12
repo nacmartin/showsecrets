@@ -3,12 +3,23 @@ name: Hello World
 
 on:
   push:
-    branches: [ main ]        # run automatically on every push to main
-  workflow_dispatch:          # adds a “Run workflow” button in the Actions tab
+    branches: [main] # run automatically on every push to main
+  workflow_dispatch: # adds a “Run workflow” button in the Actions tab
 
 jobs:
   say-hello:
-    runs-on: ubuntu-latest    # GitHub-hosted Linux runner
+    runs-on: ubuntu-latest
     steps:
-      - name: Echo greeting
-        run: echo "hello world"
+      # optional – only needed if later steps need the repo code
+      - uses: actions/checkout@v4
+
+      - name: Print the secret (will be masked in logs)
+        run: echo "MY_SECRET = ${{ secrets.MY_SECRET }}"
+
+      # If you really need the literal value inside a script,
+      # pass it via an env variable:
+      - name: Use secret in a script
+        env:
+          SECRET: ${{ secrets.MY_SECRET }}
+        run: |
+          echo "The secret length is ${#SECRET}"
